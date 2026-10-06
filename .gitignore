@@ -1,0 +1,62 @@
+__pycache__/
+*.py[cod]
+*.class
+*.so
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+.env.*
+*.env
+*ssh*.py
+ssh_real_device_test.py
+*.tmp
+*.log
+
+# ==============================================================================
+# Security & Credentials Isolation Policy
+# ==============================================================================
+*.log
+
+# ==============================================================================
+# Security & Credentials Isolation Policy
+# ==============================================================================
+.env*
+!.env.example
+*.pem
+*.key
+*.crt
+id_rsa*
+.pypirc
+.npmrc
+secrets.json
+scratch/
+# Media & Assets (allow all files in assets/ and subdirectories)
+*.jpg
+*.png
+*.xml
+!assets/**
+
+# Releases
+releases/*.whl
+releases/*.tar.gz
+releases/*.tgz
+!releases/.gitkeep
+build_assets/
+
+

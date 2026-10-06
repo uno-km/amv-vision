@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "termux-vision"
+version = "1.7.0"
+description = "Computer vision, image processing, and VLM multimodal inference for Termux utilizing device resources for Android Termux"
+readme = "README.md"
+authors = [
+  { name = "termux-vision contributors" }
+]
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Android",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.20.0",
+    "Pillow>=8.0.0",
+    "termux-llamacpp>=1.3.0",
+    "ameva-component-sdk>=0.1.0,<2.0",
+]
+
+[project.optional-dependencies]
+llamacpp = [
+    "termux-llamacpp>=0.1.0",
+    "ameva-component-sdk>=0.1.0,<2.0",
+]
+train = [
+    "termux-train>=0.1.0",
+]
+all = [
+    "termux-llamacpp>=0.1.0",
+    "ameva-component-sdk>=0.1.0,<2.0",
+    "termux-train>=0.1.0",
+]
+
+[project.scripts]
+termux-vision = "termux_vision.cli.main:main"
+
+[project.entry-points."ameva.components"]
+termux-vision = "termux_vision.adapter:create_adapter"
+
+
+[project.urls]
+Homepage = "https://uno-km.vercel.app/lib/vision/"
+Documentation = "https://uno-km.vercel.app/lib/vision/"
+Repository = "https://github.com/uno-km/termux-vision"
+Issues = "https://github.com/uno-km/termux-vision/issues"
+
+[tool.setuptools.packages.find]
+include = ["termux_vision*"]

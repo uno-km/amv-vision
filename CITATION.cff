@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software in your research or edge applications, please cite it as below."
+authors:
+  - name: "uno-km (AMEVA Foundation)"
+    email: "dev@amevafoundation.org"
+title: "termux-vision: Native On-Device Computer Vision & Multimodal VLM Inference Framework for Android Termux"
+version: 1.0.0
+date-released: 2026-08-27
+url: "https://github.com/uno-km/termux-vision"
+repository-code: "https://github.com/uno-km/termux-vision"
+license: Apache-2.0
+keywords:
+  - termux
+  - computer-vision
+  - vlm
+  - multimodal
+  - smolvlm
+  - qwen2-vl
+  - edge-ai
+  - vulkan
+  - arm64

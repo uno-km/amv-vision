@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+recursive-include termux_vision *.py
+global-exclude *.cpp *.h *.spv.h *.c *.so
