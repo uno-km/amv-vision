@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 """
 Comprehensive Unit & Integration Test Suite for User Experience, Model Selection,
 Vulkan/CPU Strict Modes, Custom (싸제) Models, and Dynamic Error Guarantees.

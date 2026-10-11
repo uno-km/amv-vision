@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 """
 Aspect-Ratio Preserving Smart Scaling and Quality Preset Module.
 Open-Source under Apache License 2.0.

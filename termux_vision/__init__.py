@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 """
 termux-vision: Lightweight On-Device Computer Vision & VLM Framework for Android Termux.
 Open-Source under Apache License 2.0.

@@ -1,4 +1,8 @@
 /**
+ * Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0 OR Commercial-License
+ */
+/**
  * termux-vision: Native On-Device Computer Vision & VLM Multimodal Inference Framework.
  * Dual-Engine (Python & Node.js/TypeScript) Native Module for Android Termux & ARM64.
  * Open-Source under Apache License 2.0.

@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 from typing import List, Tuple, Optional
 import numpy as np
 from ..cv.integral import compute_integral_image, box_sum

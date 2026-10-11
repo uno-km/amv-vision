@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 from .manifest import ModelManifest, ArtifactInfo
 from .cache import ModelCacheManager, CATALOG
 from .result import VLMResult, InferenceMetrics

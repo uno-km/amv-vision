@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 """
 Unit Tests for Advanced Parameter Extensions and Strict Null/Zero Guards.
 Zero-Hype & Truthful Diagnostics under Apache License 2.0.

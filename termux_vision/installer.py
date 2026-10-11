@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 """
 Automated Dynamic Installer and Asset Provisioner for termux-vision.
 Adheres strictly to AOSF-ENG-STD-2026, Prebuilt-Asset-First, and Idempotent Zero-Rebuild standards.

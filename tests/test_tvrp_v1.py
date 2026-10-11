@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 import pytest
 import struct
 from termux_vision.vlm.protocol import TVRPRequest, TVRPResponse, ProtocolError, MAX_CONTROL_MESSAGE_BYTES

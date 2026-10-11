@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Uno Kim / AMEVA Foundation. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0 OR Commercial-License
 from .filters import gaussian_blur, sobel, canny
 from .integral import compute_integral_image, box_sum, box_filter
 from .morphology import dilate, erode, morph_open, morph_close, structuring_element
