@@ -28,6 +28,7 @@ from ..errors import (
     ClusterConnectionError,
     ClusterConfigurationError,
 )
+from termux_vision.exceptions import RuntimeRequiredError
 
 EXIT_SUCCESS = 0
 EXIT_ARG_ERROR = 2
@@ -116,6 +117,21 @@ def resolve_model_id(cache: ModelCacheManager, requested_model_id: Optional[str]
     raise NoInstalledModelsError(catalog_models=sorted(CATALOG.keys()))
 
 def main():
+    """CLI entry point.
+
+    A GPU request without a usable ameva-runtime ends here with the shared explanation on stderr
+    and exit status 69, whichever sub-command raised it.
+    """
+    from termux_vision.exceptions import RuntimeRequiredError
+    try:
+        return _main_impl()
+    except RuntimeRequiredError as err:
+        sys.stderr.write(str(err))
+        sys.stderr.flush()
+        return 69
+
+
+def _main_impl():
     parser = argparse.ArgumentParser(
         prog="termux-vision",
         description=f"termux-vision CLI v{__version__}: High-performance on-device Computer Vision & VLM Framework for Android Termux."
@@ -246,6 +262,8 @@ def main():
                 verbose=True,
             )
             sys.exit(0 if ok else 1)
+        except RuntimeRequiredError:
+            raise
         except Exception as inst_err:
             print(f"\n[ERROR: Installation Failed] {inst_err}", file=sys.stderr)
             sys.exit(1)
@@ -292,6 +310,8 @@ def main():
                 cache.install(args.model_id, progress_callback=on_prog)
                 print(f"\n[+] Successfully installed '{args.model_id}'.")
                 sys.exit(EXIT_SUCCESS)
+            except RuntimeRequiredError:
+                raise
             except Exception as e:
                 print(f"\n[-] Model installation failed: {e}", file=sys.stderr)
                 sys.exit(EXIT_MODEL_VERIFY_FAIL)
@@ -306,6 +326,8 @@ def main():
                 saved_path = download_custom_url_or_hf(args.source, dest_dir=args.output, progress_callback=on_prog)
                 print(f"\n[+] Model successfully saved to: {saved_path}")
                 sys.exit(EXIT_SUCCESS)
+            except RuntimeRequiredError:
+                raise
             except Exception as e:
                 print(f"\n[-] Model download failed: {e}", file=sys.stderr)
                 sys.exit(EXIT_MODEL_VERIFY_FAIL)
@@ -462,6 +484,8 @@ def main():
             print(f"[ERROR] Invalid parameter: {exc}", file=sys.stderr)
             sys.exit(EXIT_ARG_ERROR)
 
+        except RuntimeRequiredError:
+            raise
         except Exception as exc:
             print(f"[ERROR] VLM execution failed: {exc}", file=sys.stderr)
             sys.exit(EXIT_INFERENCE_FAIL)

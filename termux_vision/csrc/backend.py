@@ -369,6 +369,8 @@ def c_canny(
 
     # 2. 100% Vulkan GPU Path (Anti-Deception: Zero CPU Fallback)
     if dev in ("vulkan", "gpu"):
+        from ..hardware import _require_gpu_runtime
+        _require_gpu_runtime(dev)
         vk_lib = _load_vulkan_backend()
         if vk_lib is None:
             err_msg = "\n".join(f"  - {path}: {err}" for path, err in _vk_backend_load_errors.items())
@@ -395,7 +397,11 @@ def c_canny(
 
     # 3. Auto Mode: Prefer Vulkan GPU, transparently fallback to CPU if GPU unavailable
     if dev == "auto":
-        vk_lib = _load_vulkan_backend()
+        from ..hardware import _note_cpu_instead, _resolve_ameva_runtime
+        runtime_present = _resolve_ameva_runtime() is not None
+        if not runtime_present:
+            _note_cpu_instead("ameva-runtime (AMUDA) is not installed")
+        vk_lib = _load_vulkan_backend() if runtime_present else None
         if vk_lib is not None:
             dst = np.zeros((h, w), dtype=np.uint8)
             src_ptr = src_cont.ctypes.data_as(ctypes.POINTER(ctypes.c_uint8))

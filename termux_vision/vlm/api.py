@@ -249,10 +249,17 @@ def load(
         # 4. Strict Device & Fallback Policy (Zero-Silent-Fallback Enforced)
         requested_device = device.lower().strip()
         if requested_device in ("vulkan", "vulkan-force", "gpu"):
+            from ..hardware import _require_gpu_runtime
+            _require_gpu_runtime(requested_device)
             actual_backend = "vulkan"
             actual_fallback = False
         elif requested_device == "auto":
-            actual_backend = "auto"
+            from ..hardware import _note_cpu_instead, _resolve_ameva_runtime
+            if _resolve_ameva_runtime() is None:
+                _note_cpu_instead("ameva-runtime (AMUDA) is not installed")
+                actual_backend = "cpu"
+            else:
+                actual_backend = "auto"
             actual_fallback = False
         else:
             actual_backend = "cpu"

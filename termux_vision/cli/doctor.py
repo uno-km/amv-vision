@@ -11,6 +11,7 @@ from typing import Dict, Any, Optional
 from .. import __version__
 from .. import csrc
 from ..vlm.cache import ModelCacheManager
+from termux_vision.exceptions import RuntimeRequiredError
 
 def run_doctor(probe_vulkan: bool = False, full_check: bool = False) -> Dict[str, Any]:
     """
@@ -71,6 +72,8 @@ def run_doctor(probe_vulkan: bool = False, full_check: bool = False) -> Dict[str
         report["vlm_runtime"]["multimodal_status"] = mm_msg
         if not mm_ok and report["vlm_runtime"]["llama_cli_available"]:
             report["warnings"].append(f"llama-cli detected but lacks multimodal support: {mm_msg}")
+    except RuntimeRequiredError:
+        raise
     except Exception as _mm_err:
         report["vlm_runtime"]["multimodal_status"] = f"Check failed: {_mm_err}"
 

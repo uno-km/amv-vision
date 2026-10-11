@@ -190,24 +190,67 @@ def _resolve_ameva_runtime() -> Optional[Any]:
         return None
 
 
+GPU_RUNTIME_MIN_VERSION = "2.0.0"
+
+
+def _require_gpu_runtime(requested_device: str) -> None:
+    """Stop with the shared AMU_ERR_RUNTIME_REQUIRED explanation unless ameva-runtime is usable.
+
+    Every explicit GPU request goes through here. There is no CPU fallback: the caller gets
+    RuntimeRequiredError and the CLI exits with status 69.
+    """
+    from termux_vision.exceptions import RuntimeRequiredError
+    try:
+        from ameva_device import AmevaRuntimeRequiredError, require_ameva_runtime
+    except ImportError as exc:
+        raise RuntimeRequiredError(
+            "[AMU_ERR_RUNTIME_REQUIRED] termux-vision: GPU execution (device='%s') needs ameva-runtime (AMUDA), "
+            "and the shared check library 'ameva-device-sdk' is missing from this installation.\n"
+            "Nothing was run, and no CPU fallback was used.\n"
+            "Install:\n"
+            "  pip install \"ameva-runtime>=%s\"\n"
+            "  npm install -g @ameva/runtime\n"
+            "  Releases and documentation: https://github.com/uno-km/ameva-runtime-releases\n"
+            "To run on the CPU instead, use --device cpu.\n" % (requested_device, GPU_RUNTIME_MIN_VERSION)
+        ) from exc
+    try:
+        require_ameva_runtime(
+            "termux-vision", "GPU execution (device='%s')" % requested_device,
+            min_version=GPU_RUNTIME_MIN_VERSION,
+        )
+    except AmevaRuntimeRequiredError as exc:
+        raise RuntimeRequiredError(str(exc)) from exc
+
+
+_NOTED_CPU_REASONS = set()
+
+
+def _note_cpu_instead(reason: str) -> None:
+    """auto mode: say on stderr (once per reason) that the GPU was not used, so the CPU run is never silent."""
+    import sys
+    if reason in _NOTED_CPU_REASONS:
+        return
+    _NOTED_CPU_REASONS.add(reason)
+    sys.stderr.write("[termux-vision] GPU not used: %s. This run uses the CPU. "
+                     "To enable the GPU: pip install ameva-runtime (https://github.com/uno-km/ameva-runtime-releases)\n" % reason)
+    sys.stderr.flush()
+
+
 def resolve_device(requested_device: str = "auto") -> Tuple[str, int]:
     """Resolve compute device ('cpu' or 'vulkan') and recommended GPU offload layers."""
     req = str(requested_device).lower().strip()
     if req in ("vulkan", "gpu"):
-        rt = _resolve_ameva_runtime()
-        if rt is None:
-            # Under fail-fast policy, guide user to ameva-runtime
-            from .exceptions import HardwareCompatibilityError
-            raise HardwareCompatibilityError(
-                "Vulkan GPU acceleration requires commercial engine. Run: pip install ameva-runtime",
-                code="E003_VULKAN_NOT_PROVISIONED"
-            )
+        # Every explicit GPU request needs ameva-runtime (AMUDA); no CPU fallback.
+        _require_gpu_runtime(req)
         return "vulkan", 99
     
     # Auto resolution
     if req == "auto":
         rt = _resolve_ameva_runtime()
-        if rt is not None and detect_hardware().has_vulkan:
+        if rt is None:
+            _note_cpu_instead("ameva-runtime (AMUDA) is not installed")
+            return "cpu", 0
+        if detect_hardware().has_vulkan:
             return "vulkan", 99
         return "cpu", 0
 
