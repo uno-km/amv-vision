@@ -39,7 +39,7 @@ termux-vision install
 
 ### 2.3 Direct GitHub Releases Wheel Asset
 ```bash
-pip install https://github.com/uno-km/termux-vision/releases/download/v1.6.0/termux_vision-1.6.0-py3-none-any.whl
+pip install https://github.com/uno-km/termux-vision/releases/download/v1.5.0/termux_vision-1.5.0-py3-none-any.whl
 ```
 
 ### 2.4 One-Line Bootstrap Installer

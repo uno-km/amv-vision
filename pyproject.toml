@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "termux-vision"
-version = "1.7.0"
+version = "1.8.0"
 description = "Computer vision, image processing, and VLM multimodal inference for Termux utilizing device resources for Android Termux"
 readme = "README.md"
 authors = [

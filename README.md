@@ -72,8 +72,8 @@ pkg install -y python nodejs clang make cmake git termux-api wget vulkan-loader 
 
 * **Option C: Direct GitHub Releases Wheel Asset**:
   ```bash
-  # Download and install the prebuilt v1.6.0 release wheel
-  pip install https://github.com/uno-km/termux-vision/releases/download/v1.6.0/termux_vision-1.6.0-py3-none-any.whl
+  # Download and install the prebuilt v1.5.0 release wheel
+  pip install https://github.com/uno-km/termux-vision/releases/download/v1.5.0/termux_vision-1.5.0-py3-none-any.whl
   ```
 
 ### 2.3 Node.js / TypeScript CLI Installation
@@ -277,49 +277,6 @@ termux-vision doctor
                                         |  - KV Cache     :  384.00 MiB |
                                         |  - CPU Mapped   :    0.00 MiB |
                                         +-------------------------------+
-```
-
----
-
-## Distributed Clustering & Memory Pooling (AMEVA-Cluster)
-
-Termux-Vision integrates with **AMEVA-Cluster** (`pip install ameva-cluster`) for distributed multimodal VLM inference across interconnected mobile fleets.
-
-### 1. Install Cluster Runtime
-```bash
-pip install ameva-cluster
-# or Node.js:
-npm install @ameva/cluster
-```
-
-### 2. Launch Worker Node on Remote Phone
-```bash
-# On remote worker device (e.g. Galaxy A53):
-ameva-cluster worker --port 50052
-```
-
-### 3. Distributed VLM Image Analysis
-```bash
-# Master node running VLM inference sharded across remote phone RAM:
-termux-vision analyze \
-  --model Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf \
-  --mmproj mmproj-Qwen2.5-VL-7B.gguf \
-  --image scene.jpg \
-  --rpc 192.0.2.10:50052,192.0.2.11:50052 \
-  -p "Detailed description of all objects in this image."
-```
-
-```python
-from termux_vision import vlm
-
-# Python SDK Distributed VLM
-engine = vlm.load(
-    "Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf",
-    mmproj="mmproj-Qwen2.5-VL-7B.gguf",
-    cluster_rpc_servers="192.0.2.10:50052,192.0.2.11:50052"
-)
-res = engine.generate("scene.jpg", prompt="Describe the image.")
-print(res.text)
 ```
 
 ---
