@@ -12,6 +12,14 @@
 
 ---
 
+## What's New in v1.8.0 — Unified ameva-runtime HAL & OpenSSF Governance
+
+- Routed all VLM vision GPU acceleration requests through unified ameva-runtime HAL.
+- Synchronized GitHub Release tags with npm and PyPI registry versions.
+- Standardized Apache-2.0 SPDX license headers and POSIX LF line endings.
+
+---
+
 ## 📑 Table of Contents
 
 1. [Overview & Key Capabilities](#1-overview--key-capabilities)

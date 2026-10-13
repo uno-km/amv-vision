@@ -1,3 +1,14 @@
+# v1.8.0 (2026-10-13) — Unified ameva-runtime HAL & OpenSSF Governance
+
+Consolidated all mobile VLM vision GPU acceleration requests through ameva-runtime HAL, published official GitHub Release assets, and enforced OpenSSF SPDX compliance.
+
+### Key Changes
+- Routed all VLM vision GPU acceleration requests through unified ameva-runtime HAL.
+- Synchronized GitHub Release tags with npm and PyPI registry versions.
+- Standardized Apache-2.0 SPDX license headers and POSIX LF line endings.
+
+---
+
 # Changelog
 
 All notable changes to `termux-vision` will be documented in this file.

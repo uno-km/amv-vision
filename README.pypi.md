@@ -10,6 +10,14 @@
 
 ---
 
+## What's New in v1.8.0 — Unified ameva-runtime HAL & OpenSSF Governance
+
+- Routed all VLM vision GPU acceleration requests through unified ameva-runtime HAL.
+- Synchronized GitHub Release tags with npm and PyPI registry versions.
+- Standardized Apache-2.0 SPDX license headers and POSIX LF line endings.
+
+---
+
 ## 1. Overview & Key Capabilities
 
 `termux-vision` is an enterprise-grade, on-device multimodal vision inference and spatial computing framework engineered specifically for mobile Android devices. Operating directly against Android's native Bionic libc ABI and host Vulkan compute drivers, `termux-vision` eliminates heavyweight desktop dependencies (OpenCV, TorchVision) and enables high-throughput visual question answering, OCR image captioning, and classical feature extraction directly on edge hardware.
