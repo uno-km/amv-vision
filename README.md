@@ -1,10 +1,14 @@
-# Termux-Vision: On-Device Computer Vision & Multimodal VLM Framework
+# AMV-Vision: On-Device Computer Vision & Multimodal VLM Framework
 
-[![PyPI](https://img.shields.io/pypi/v/termux-vision.svg?style=flat-square&color=0369a1)](https://pypi.org/project/termux-vision/)
-[![Python](https://img.shields.io/pypi/pyversions/termux-vision.svg?style=flat-square)](https://pypi.org/project/termux-vision/)
-[![npm](https://img.shields.io/npm/v/termux-vision.svg?style=flat-square&color=b91c1c)](https://www.npmjs.com/package/termux-vision)
-[![npm downloads](https://img.shields.io/npm/dm/termux-vision.svg?style=flat-square&color=b91c1c)](https://www.npmjs.com/package/termux-vision)
-[![License](https://img.shields.io/badge/License-Apache_2.0-004499.svg?style=flat-square)](https://github.com/uno-km/termux-vision)
+> **마이그레이션 안내**: 이 패키지는 `termux-vision`에서 `amv-vision`로 이름이 바뀌었습니다. 기존 `termux-vision` 배포본(PyPI/npm)은 호환을 위해 당분간 유지되나 deprecated 상태이며 더 이상 갱신되지 않습니다. `pip install amv-vision` / `npm install amv-vision`로 전환하십시오.
+>
+> Android **Termux 환경** 또는 **안드로이드 Linux 커널(루팅 없이 Linux 환경이 구동되는 모든 디바이스)** 에서 동작합니다 — Termux 전용이 아닙니다.
+
+[![PyPI](https://img.shields.io/pypi/v/amv-vision.svg?style=flat-square&color=0369a1)](https://pypi.org/project/amv-vision/)
+[![Python](https://img.shields.io/pypi/pyversions/amv-vision.svg?style=flat-square)](https://pypi.org/project/amv-vision/)
+[![npm](https://img.shields.io/npm/v/amv-vision.svg?style=flat-square&color=b91c1c)](https://www.npmjs.com/package/amv-vision)
+[![npm downloads](https://img.shields.io/npm/dm/amv-vision.svg?style=flat-square&color=b91c1c)](https://www.npmjs.com/package/amv-vision)
+[![License](https://img.shields.io/badge/License-Apache_2.0-004499.svg?style=flat-square)](https://github.com/uno-km/amv-vision)
 [![Hardware Acceleration](https://img.shields.io/badge/Vulkan-1.1%2B%20Compute-orange?style=flat-square&logo=vulkan)](https://www.vulkan.org/)
 
 > **Native On-Device Computer Vision & Multimodal Vision-Language Model (VLM) Runtime for Android Termux via Direct Bionic libc & Vulkan Compute Acceleration.**  
@@ -27,7 +31,7 @@
 3. [Enabling Hardware GPU Acceleration (with ameva-runtime)](#3-enabling-hardware-gpu-acceleration-with-ameva-runtime)
 4. [Standardized CLI & Parameter Matrix](#4-standardized-cli--parameter-matrix)
 5. [Dual Engine Code Examples (Python & Node.js)](#5-dual-engine-code-examples-python--nodejs)
-6. [Production Diagnostics (`termux-vision doctor`)](#6-production-diagnostics-termux-vision-doctor)
+6. [Production Diagnostics (`amv-vision doctor`)](#6-production-diagnostics-amv-vision-doctor)
 7. [Real-World Benchmarks & Hardware Scorecard](#7-real-world-benchmarks--hardware-scorecard)
 8. [Memory & VRAM Architecture (Zero CPU-Mapped VRAM)](#8-memory--vram-architecture)
 9. [Hardware Requirements & Operational Limits](#9-hardware-requirements--operational-limits)
@@ -37,7 +41,7 @@
 
 ## 1. Overview & Key Capabilities
 
-`termux-vision` is an enterprise-grade, on-device multimodal vision inference and spatial computing framework engineered specifically for mobile Android devices. Operating directly against Android's native Bionic libc ABI and host Vulkan compute drivers, `termux-vision` eliminates heavyweight desktop dependencies (OpenCV, TorchVision) and enables high-throughput visual question answering, OCR image captioning, and classical feature extraction directly on edge hardware.
+`amv-vision` is an enterprise-grade, on-device multimodal vision inference and spatial computing framework engineered specifically for mobile Android devices. Operating directly against Android's native Bionic libc ABI and host Vulkan compute drivers, `amv-vision` eliminates heavyweight desktop dependencies (OpenCV, TorchVision) and enables high-throughput visual question answering, OCR image captioning, and classical feature extraction directly on edge hardware.
 
 * **100% Vulkan GPU Compute Canny (`0.23 ms`)**: Chains 3-pass SPIR-V compute shaders (Sobel 3x3, NMS, Hysteresis) entirely within VRAM using `vkCmdPipelineBarrier`, achieving 834x acceleration over Python without CPU memory roundtrips.
 * **Ultra-Fast ARM64 NEON C++ Kernel (`3.02 ms`)**: Permanently eliminates trigonometric `atan2f` via tangent ratio bit quantization and 1-byte direction buffers, running Canny filtering in 3.02ms on Snapdragon 865 and 4.36ms on Exynos 1380.
@@ -50,7 +54,7 @@
 
 ## 2. Installation Guide & Prebuilt Installer
 
-`termux-vision` is distributed across both Python (PyPI) and Node.js (npm) ecosystems, with official precompiled ARM64 wheel assets published on GitHub Releases.
+`amv-vision` is distributed across both Python (PyPI) and Node.js (npm) ecosystems, with official precompiled ARM64 wheel assets published on GitHub Releases.
 
 ### 2.1 Termux System Prerequisites
 Launch Termux and install required native compilers, Vulkan drivers, and image libraries:
@@ -64,54 +68,54 @@ pkg install -y python nodejs clang make cmake git termux-api wget vulkan-loader 
 * **Option A: Install from PyPI (Recommended)**:
   ```bash
   pip install --upgrade pip setuptools wheel
-  pip install termux-vision
+  pip install amv-vision
   ```
 
 * **Option B: Prebuilt Native Engine Provisioning (Idempotent 0.005s)**:
   ```bash
   # Automatically download & unpack verified ARM64 prebuilt assets
-  termux-vision install
+  amv-vision install
   
   # Optional maintenance flags:
-  # termux-vision install --force        # Force re-downloading prebuilts
-  # termux-vision install --from-source   # Force compiling from local C++ source
-  # termux-vision install --dry-run       # Check integrity without making changes
+  # amv-vision install --force        # Force re-downloading prebuilts
+  # amv-vision install --from-source   # Force compiling from local C++ source
+  # amv-vision install --dry-run       # Check integrity without making changes
   ```
 
 * **Option C: Direct GitHub Releases Wheel Asset**:
   ```bash
   # Download and install the prebuilt v1.5.0 release wheel
-  pip install https://github.com/uno-km/termux-vision/releases/download/v1.5.0/termux_vision-1.5.0-py3-none-any.whl
+  pip install https://github.com/uno-km/amv-vision/releases/download/v1.5.0/termux_vision-1.5.0-py3-none-any.whl
   ```
 
 ### 2.3 Node.js / TypeScript CLI Installation
 ```bash
 # Global CLI installation
-npm install -g termux-vision
+npm install -g amv-vision
 
 # Local project dependency
-npm install termux-vision
+npm install amv-vision
 ```
 
 ### 2.4 One-Line Bootstrap Installer
 Run the universal bootstrap installer to automatically configure repositories, compile native C/C++ acceleration shims, and verify hardware:
 ```bash
-curl -sL https://raw.githubusercontent.com/uno-km/termux-vision/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/uno-km/amv-vision/main/install.sh | bash
 ```
 
 ---
 
 ## 3. Enabling Hardware GPU Acceleration (with ameva-runtime)
 
-To unlock mobile GPU acceleration via Vulkan compute shaders and achieve significant speedups over pure CPU execution, install **`termux-vision`** alongside **`ameva-runtime`**:
+To unlock mobile GPU acceleration via Vulkan compute shaders and achieve significant speedups over pure CPU execution, install **`amv-vision`** alongside **`ameva-runtime`**:
 
 ### 🌟 One-Line Installation
 ```bash
 # Python Environment
-pip install termux-vision ameva-runtime termux-llamacpp
+pip install amv-vision ameva-runtime termux-llamacpp
 
 # Node.js Environment
-npm install -g termux-vision @ameva/runtime
+npm install -g amv-vision @ameva/runtime
 ```
 
 ### 🔮 Mobile GPU Silicon Architecture Status
@@ -124,14 +128,14 @@ npm install -g termux-vision @ameva/runtime
 
 Verify GPU driver detection and hardware readiness:
 ```bash
-termux-vision doctor
+amv-vision doctor
 ```
 
 ---
 
 ## 4. Standardized CLI & Parameter Matrix
 
-`termux-vision` strictly complies with the official `uno-km` family 5-backend CLI standard:
+`amv-vision` strictly complies with the official `uno-km` family 5-backend CLI standard:
 
 | Parameter | Alias | Default | Description |
 | :--- | :--- | :--- | :--- |
@@ -154,19 +158,19 @@ termux-vision doctor
 
 ```bash
 # 1. 100% Vulkan GPU Canny Edge Detection (0.23 ms on Adreno 830)
-termux-vision canny photo.jpg -o edges.png --gpu --low 40 --high 120
+amv-vision canny photo.jpg -o edges.png --gpu --low 40 --high 120
 
 # 2. Ultra-Fast NEON C++ Canny Edge Detection (3.02 ms on S20 CPU)
-termux-vision canny photo.jpg -o edges.png --cpu
+amv-vision canny photo.jpg -o edges.png --cpu
 
 # 3. Multimodal VLM Inference with Automated GPU Routing
-termux-vision vlm photo.jpg -p "What objects are visible in this scene?"
+amv-vision vlm photo.jpg -p "What objects are visible in this scene?"
 
 # 4. Pure GPU Mode on ARM Mali Silicon (Galaxy S21 / A35)
-termux-vision vlm photo.jpg -d gpu --tune-mali -p "Describe the text and layout."
+amv-vision vlm photo.jpg -d gpu --tune-mali -p "Describe the text and layout."
 
 # 5. Prebuilt Native Binary Provisioning (0.005s Idempotent Skip)
-termux-vision install
+amv-vision install
 ```
 
 ---
@@ -192,12 +196,13 @@ with tv.vlm.load("smolvlm-500m", device="gpu") as engine:
         max_tokens=200
     )
     print(f"Backend: {result.metrics.backend} | TPS: {result.metrics.tokens_per_second:.2f} tok/s")
-    print(f"Response:\n{result.text}")
+    print(f"Response:
+{result.text}")
 ```
 
 ### 5.2 Node.js / TypeScript SDK
 ```typescript
-import tv from 'termux-vision';
+import tv from 'amv-vision';
 
 // 1. Hardware Diagnostic Probe
 const doctor = tv.doctor(true);
@@ -217,23 +222,23 @@ engine.close();
 
 ---
 
-## 6. Production Diagnostics (`termux-vision doctor`)
+## 6. Production Diagnostics (`amv-vision doctor`)
 
 Termux-Vision features an integrated hardware diagnostics probe to inspect the host environment before launching inference:
 
 ```bash
-termux-vision doctor
+amv-vision doctor
 ```
 
 **Diagnostic Output Profile:**
 ```
-=== termux-vision Diagnostic Doctor ===
+=== amv-vision Diagnostic Doctor ===
   Platform : Linux (aarch64) | Android: True
   RAM      : Total 7812MB | Available 3450MB
   CPU Cores: 8 (big.LITTLE Affinity Governor active)
   Vulkan   : Loader=True | Driver=/system/lib64/libvulkan.so | Status=READY
   GPU Soc  : ARM Mali-G78 MP14 (Exynos 2100)
-  Models   : 2 installed in ~/.cache/termux-vision/models
+  Models   : 2 installed in ~/.cache/amv-vision/models
   Preset   : optimal (768px recommended)
 ```
 
@@ -308,5 +313,5 @@ Copyright (c) 2026 Eunho Kim ([@uno-km](https://github.com/uno-km)) & AMEVA Open
 
 * [Official Documentation Portal](https://uno-km.vercel.app/lib/vision/)
 * [AMEVA Open-Source Foundation](https://uno-km.vercel.app/foundation/index.html)
-* [GitHub Repository](https://github.com/uno-km/termux-vision)
-* [Issue Tracker](https://github.com/uno-km/termux-vision/issues)
+* [GitHub Repository](https://github.com/uno-km/amv-vision)
+* [Issue Tracker](https://github.com/uno-km/amv-vision/issues)
