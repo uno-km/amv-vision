@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "bin": {
-    "termux-vision": "bin/cli.js",
+    "amv-vision": "bin/cli.js",
     "tv": "bin/cli.js"
   },
   "files": [
@@ -44,10 +44,10 @@
   "homepage": "https://uno-km.vercel.app/lib/vision/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uno-km/termux-vision.git"
+    "url": "git+https://github.com/uno-km/amv-vision.git"
   },
   "bugs": {
-    "url": "https://github.com/uno-km/termux-vision/issues"
+    "url": "https://github.com/uno-km/amv-vision/issues"
   },
   "dependencies": {},
   "engines": {
